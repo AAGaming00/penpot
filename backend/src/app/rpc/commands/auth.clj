@@ -303,7 +303,8 @@
         params    (merge params claims)]
     (check-profile-existence! conn params)
     (let [is-active  (or (:is-active params)
-                         (contains? cf/flags :insecure-register))
+                         (contains? cf/flags :insecure-register)
+                         (not (contains? cf/flags :email-verification)))
           profile    (->> (assoc params :is-active is-active)
                           (create-profile conn)
                           (create-profile-relations conn)
